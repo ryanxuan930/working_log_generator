@@ -38,8 +38,8 @@
         </table>
         <div style="height: 0.5cm"></div>
         <div class="flex">
-            <div class="basis-1/2">承辦人：</div>
-            <div class="basis-1/2">單位主管：</div>
+            <div class="basis-1/2 text-left">承辦人：</div>
+            <div class="basis-1/2 text-left">單位主管：</div>
         </div>
     </div>
 </template>
