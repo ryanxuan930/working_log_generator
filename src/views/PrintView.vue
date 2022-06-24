@@ -5,7 +5,7 @@
         <div style="height: 0.5cm"></div>
         <div style="font-size: 18pt; font-weight: bold;">{{data.year}} 年 {{data.month}} 月 工讀日誌</div>
         <div style="height: 0.5cm"></div>
-        <div style="font-size: 14pt;">姓名：{{data.name}}&emsp;手機：{{data.phone}}&emsp;學號：{{data.schoolId}}&emsp;身分證字號：{{data.unifiedId}}&emsp;總計時數：{{data.total}} 小時</div>
+        <div style="font-size: 14pt;">姓名：{{data.name}}&emsp;手機：{{data.phone}}&emsp;學號：{{data.schoolId}}&emsp;身分證字號：{{data.unifiedId}}</div>
         <div style="height: 0.5cm"></div>
         <table class="w-full text-left">
             <tr>
@@ -32,6 +32,9 @@
                     </td>
                 </tr>
             </template>
+            <tr>
+                <td colspan="6" class="text-center">總計共 {{data.total}} 小時</td>
+            </tr>
             <tr>
                 <td colspan="6" class="text-center">以下空白</td>
             </tr>
