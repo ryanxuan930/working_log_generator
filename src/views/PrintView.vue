@@ -28,7 +28,7 @@
                     </td>
                     <td>
                         <div v-if="item.fillIn!=''">[代班]-{{item.fillIn}}</div>
-                        <div v-if="item.remark!=''">{{item.fillIn}}</div>
+                        <div v-if="item.remark!=''">{{item.remark}}</div>
                     </td>
                 </tr>
             </template>
