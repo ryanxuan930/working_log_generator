@@ -36,6 +36,11 @@
                 <td colspan="6" class="text-center">以下空白</td>
             </tr>
         </table>
+        <div style="height: 0.5cm"></div>
+        <div class="flex">
+            <div class="basis-1/2">承辦人：</div>
+            <div class="basis-1/2">單位主管：</div>
+        </div>
     </div>
 </template>
 
