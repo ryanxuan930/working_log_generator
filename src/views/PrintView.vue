@@ -5,7 +5,7 @@
         <div style="height: 0.5cm"></div>
         <div style="font-size: 18pt; font-weight: bold;">{{data.year}} 年 {{data.month}} 月 工讀日誌</div>
         <div style="height: 0.5cm"></div>
-        <div style="font-size: 14pt;">姓名：{{data.name}}&emsp;手機：{{data.phone}}&emsp;學號：{{data.schoolId}}&emsp;身分證字號：{{data.unifiedId}}</div>
+        <div style="font-size: 14pt;">姓名：{{data.name}}&emsp;手機：{{data.phone}}&emsp;學號：{{data.schoolId}}&emsp;身分證字號：{{data.unifiedId}}&emsp;總計時數：{{data.total}} 小時</div>
         <div style="height: 0.5cm"></div>
         <table class="w-full text-left">
             <tr>
@@ -13,6 +13,7 @@
                 <th>時間</th>
                 <th>時數</th>
                 <th>地點</th>
+                <th>出勤</th>
                 <th>備註</th>
             </tr>
             <template v-for="(item, index) in data.log" :key="index">
@@ -22,12 +23,18 @@
                     <td>{{item.duration}}</td>
                     <td>{{item.location}}</td>
                     <td>
+                        <span v-if="item.status=='正常出勤'" class="text-green-600">正常出勤</span>
+                        <span v-else class="text-red-600">{{item.status}}</span>
+                    </td>
+                    <td>
                         <div v-if="item.fillIn!=''">[代班]-{{item.fillIn}}</div>
                         <div v-if="item.remark!=''">{{item.fillIn}}</div>
-                        <div v-if="item.fillIn=='' && item.remark==''">一切正常</div>
                     </td>
                 </tr>
             </template>
+            <tr>
+                <td colspan="6" class="text-center">以下空白</td>
+            </tr>
         </table>
     </div>
 </template>

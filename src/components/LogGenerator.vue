@@ -25,6 +25,7 @@
                     <span>月</span>
                 </div>
                 <div>共 {{logTemp.log.length}} 筆紀錄</div>
+                <div>總時數： {{logTemp.total}} 小時</div>
                 <div class="flex-grow"></div>
                 <div>
                     <button @click="sortList" class="text-sky-400 hover:text-sky-500 duration-300 mr-2">排序</button>
@@ -46,16 +47,16 @@
                 <template v-for="(item, index) in logTemp.log" :key="index">
                     <div class="flex items-center my-2">
                         <div class="flex-grow">
-                            <div class="flex items-center">
+                            <div class="flex items-center mb-2">
                                 <div>
                                     <span>日期：</span>
-                                    <input type="date" v-model="logTemp.log[index].date">
+                                    <input class="border-2 rounded p-1" type="date" v-model="logTemp.log[index].date">
                                 </div>
                                 <div class="ml-2">
                                     <span>時間：</span>
-                                    <input type="time" v-model="logTemp.log[index].startTime">
+                                    <input class="border-2 rounded p-1" type="time" v-model="logTemp.log[index].startTime">
                                     <span class="inline-block mx-1">到</span>
-                                    <input type="time" v-model="logTemp.log[index].endTime">
+                                    <input class="border-2 rounded p-1" type="time" v-model="logTemp.log[index].endTime">
                                 </div>
                                 <div class="ml-2">
                                     <span>時數：</span>
@@ -65,7 +66,7 @@
                             <div class="flex items-center">
                                 <div>
                                     <span>地點：</span>
-                                    <select v-model="logTemp.log[index].location">
+                                    <select class="border-2 rounded p-1" v-model="logTemp.log[index].location">
                                         <template v-for="(item, index) in locationList" :key="index">
                                             <option>{{item}}</option>
                                         </template>
@@ -74,6 +75,14 @@
                                 <div class="ml-2">
                                     <span>代班：</span>
                                     <input type="text" class="border-2 rounded p-1" v-model="logTemp.log[index].fillIn">
+                                </div>
+                                <div class="ml-2">
+                                    <span>出勤狀況：</span>
+                                    <select class="border-2 rounded p-1" v-model="logTemp.log[index].status">
+                                        <option>正常出勤</option>
+                                        <option>未出勤-請假</option>
+                                        <option>未出勤-其他原因</option>
+                                    </select>
                                 </div>
                                 <div class="ml-2">
                                     <span>備註：</span>
@@ -112,6 +121,7 @@ export default defineComponent({
             unifiedId: "",
             year: "111",
             month: "1",
+            total: 0,
             log: []
         };
         const logTemplate = {
@@ -120,6 +130,7 @@ export default defineComponent({
             endTime: "",
             duration: 0,
             location: "辦公室",
+            status: "正常出勤",
             remark: "",
             fillIn: "",
         };
@@ -140,6 +151,12 @@ export default defineComponent({
         watch(logTemp, ()=>{
             console.log('change');
             localStorage.working_log_temp = JSON.stringify(logTemp.value);
+            logTemp.value.total=0;
+            for(let i=0; i<logTemp.value.log.length; i++){
+                if(logTemp.value.log[i].status=='正常出勤'){
+                    logTemp.value.total+=logTemp.value.log[i].duration;
+                }
+            }
         },{ deep: true });
         function exportFile() {
             if(localStorage.working_log_temp){
@@ -183,7 +200,10 @@ export default defineComponent({
                 const d1: any = new Date(date+' '+startTime);
                 const d2: any = new Date(date+' '+endTime);
                 console.log(d2-d1);
-                const r = (d2 - d1) / 1000 / 60 / 60;
+                let r = 0;
+                if(logTemp.value.log[index].status=='正常出勤'){
+                    r = (d2 - d1) / 1000 / 60 / 60;
+                }
                 logTemp.value.log[index].duration = isNaN(r)?0:r;
                 return (!isNaN(r) && r>0)?r:0;
             },
