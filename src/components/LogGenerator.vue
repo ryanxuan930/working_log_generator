@@ -151,12 +151,11 @@ export default defineComponent({
         watch(logTemp, ()=>{
             console.log('change');
             localStorage.working_log_temp = JSON.stringify(logTemp.value);
-            logTemp.value.total=0;
+            let temp = 0;
             for(let i=0; i<logTemp.value.log.length; i++){
-                if(logTemp.value.log[i].status=='正常出勤'){
-                    logTemp.value.total+=logTemp.value.log[i].duration;
-                }
+                temp += logTemp.value.log[i].duration;
             }
+            logTemp.value.total= temp;
         },{ deep: true });
         function exportFile() {
             if(localStorage.working_log_temp){
